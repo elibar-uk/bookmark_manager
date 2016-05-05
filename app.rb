@@ -3,10 +3,14 @@ ENV["RACK_ENV"] ||= 'development'
 
 require 'sinatra/base'
 require_relative 'data_mapper_setup'
-require './models/link.rb'
-require './models/tag.rb'
+# require './models/link.rb'
+# require './models/tag.rb'
 
 class Bookmark < Sinatra::Base
+
+  get '/' do
+    redirect '/links'
+  end
 
   get '/links' do
     @links = Link.all
@@ -23,6 +27,13 @@ class Bookmark < Sinatra::Base
     link.save
     redirect '/links'
   end
+
+  get '/tags/:name' do
+    tag = Tag.first(name: params[:name])
+    @links = tag ? tag.links : []
+    erb :links
+  end
+
 
  run! if app_file == $0
 end

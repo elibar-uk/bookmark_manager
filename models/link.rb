@@ -1,3 +1,4 @@
+# require_relative '../data_mapper_setup'
 # require 'dm-migrations'
 require 'data_mapper'
 require 'dm-postgres-adapter'
