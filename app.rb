@@ -3,8 +3,6 @@ ENV["RACK_ENV"] ||= 'development'
 
 require 'sinatra/base'
 require_relative 'data_mapper_setup'
-# require './models/link.rb'
-# require './models/tag.rb'
 
 class Bookmark < Sinatra::Base
 
@@ -19,19 +17,20 @@ class Bookmark < Sinatra::Base
   get '/links/new' do
     erb :form
   end
-  post '/links' do
-    link = Link.create(title: params[:title], url: params[:url])
-    tag = Tag.create(name: params[:tags])
-    p tag
-    link.tags << tag
-    link.save
-    redirect '/links'
-  end
 
   get '/tags/:name' do
-    tag = Tag.first(name: params[:name])
+    tag = Tag.all(name: params[:name])
     @links = tag ? tag.links : []
     erb :links
+  end
+
+  post '/links' do
+    link = Link.create(url: params[:url], title: params[:title])
+    params[:tags].split(" ").each do |tag|
+    link.tags << Tag.create(name: tag)
+    end
+    link.save
+    redirect to('/links')
   end
 
 

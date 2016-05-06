@@ -1,5 +1,4 @@
-# require_relative '../data_mapper_setup'
-# require_relative '../data_mapper_setup'
+
 
 class Tag
   include DataMapper::Resource
