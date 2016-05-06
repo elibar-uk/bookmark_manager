@@ -8,6 +8,7 @@ require './app'
 require 'database_cleaner'
 require './models/link.rb'
 require './models/tag.rb'
+require_relative 'features/web_helper'
 
 Capybara.app = Bookmark
 RSpec.configure do |config|
